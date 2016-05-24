@@ -1,0 +1,13 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<maps xmlns:android="http://schemas.android.com/apk/res/android">
+<map name="gridmap">
+    <area id="@+id/UP" shape="rect" coords="42,229,100,255" />
+    <area id="@+id/DOWN" shape="rect" coords="105,228,163,254" />
+    <area id="@+id/ONOFF" shape="rect" coords="100,311,142,339" />
+    <area id="@+id/START" shape="rect" coords="38,261,80,289" />
+    <area id="@+id/HOLD" shape="rect" coords="38,288,80,316" />
+    <area id="@+id/B" shape="rect" coords="84,195,121,224" />
+    <area id="@+id/C" shape="rect" coords="120,195,157,224" />
+    <area id="@+id/A" shape="rect" coords="48,195,85,224" />
+</map>
+</maps>

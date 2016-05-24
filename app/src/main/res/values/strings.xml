@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AlarisGP Simulator</string>
+    <string name="action_settings">About</string>
+    <string name="giocchi">Giocchi</string>
+</resources>
