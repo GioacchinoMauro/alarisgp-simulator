@@ -1,3 +1,10 @@
+/**---------------------------------------------------------------
+*   Model: emucharts_AlarisGP_MisraC
+*   Author: Gioacchino Mauro
+*   Created: 19/05/16
+*           <contact>
+*  ---------------------------------------------------------------*/
+
 #include <string.h>
 #include <assert.h>
 #include <math.h>

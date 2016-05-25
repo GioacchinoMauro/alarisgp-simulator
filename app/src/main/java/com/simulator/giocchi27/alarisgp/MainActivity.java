@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
 
     ImageView led_HOLD;
     ImageView led_START;
+    ImageView led_ON;
 
     private static final String TAG = "MyActivity";
 
@@ -89,9 +90,11 @@ public class MainActivity extends AppCompatActivity
 
         led_HOLD = (ImageView) findViewById(R.id.led_HOLD);
         led_START = (ImageView) findViewById(R.id.led_START);
+        led_ON = (ImageView) findViewById(R.id.led_ON);
 
         led_HOLD.setVisibility(View.INVISIBLE);
         led_START.setVisibility(View.INVISIBLE);
+        led_ON.setVisibility(View.INVISIBLE);
 
         t.setAnimation(AnimationUtils.loadAnimation(this, R.anim.blink));
 
@@ -134,13 +137,13 @@ public class MainActivity extends AppCompatActivity
         switch(v.getId()){
 
             case R.id.but_VB_A: /** Virtual Button A Clicked */
-                t.setText("Button A");
+                t.setText("ON HOLD - SET RATE");
                 val_using = (TextView)findViewById(R.id.val_using);
                 val_other = (TextView)findViewById(R.id.val_other);
                 break;
 
             case R.id.but_VB_B: /** Virtual Button B Clicked */
-                t.setText("Button B");
+                t.setText("ON HOLD - SET VTBI");
                 val_using = (TextView)findViewById(R.id.val_other);
                 val_other = (TextView)findViewById(R.id.val_using);
                 break;
@@ -152,12 +155,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.but_ONOFF: /** Button ON/OFF Clicked */
                 if (invoke_per_Turn_ON()) {
                     invoke_Turn_ON();
-                    t.setText("Turn ON!");
+                    t.setText("ON HOLD - SET RATE");
                     val_using.setText("" + String.format("%.01f", invoke_GetDisplay())); // it starts with volume
                     val_other.setText("0,00");
                     val_volume.setText("0,00");
                     setView("RATE:","VTBI:","VOLUME","Vol","VTBI","","ml/h","ml","ml");
                     led_HOLD.setVisibility(View.VISIBLE);
+                    led_ON.setVisibility(View.VISIBLE);
                     Snackbar.make(v, "Device turned on", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
                 }
                 else if (invoke_per_Turn_OFF()) {
@@ -168,6 +172,7 @@ public class MainActivity extends AppCompatActivity
                     val_volume.setText("");
                     setView("","","","","","","","","");
                     led_HOLD.setVisibility(View.INVISIBLE);
+                    led_ON.setVisibility(View.INVISIBLE);
                     Snackbar.make(v, "Device turned off", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
                 }
                 break;

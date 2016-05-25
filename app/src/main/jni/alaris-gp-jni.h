@@ -1,11 +1,7 @@
-//
-// Created by giocchi27 on 24/05/16.
-//
-
 /**---------------------------------------------------------------
-*   Model: emucharts_AlarisGH_AsenaCC_MisraC
-*   Author: <author name>
-*           <affiliation>
+*   Model: emucharts_AlarisGP_MisraC
+*   Author: Gioacchino Mauro
+*   Created: 24/05/16
 *           <contact>
 *  ---------------------------------------------------------------*/
 
