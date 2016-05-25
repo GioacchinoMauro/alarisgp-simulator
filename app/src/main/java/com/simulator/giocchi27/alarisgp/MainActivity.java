@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import android.widget.Toast;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity
     TextView ml_labelA;
     TextView ml_labelB;
     TextView ml_labelC;
+
+    ImageView led_HOLD;
+    ImageView led_START;
 
     private static final String TAG = "MyActivity";
 
@@ -83,6 +87,11 @@ public class MainActivity extends AppCompatActivity
         ml_labelB = (TextView)findViewById(R.id.ml_labelB);
         ml_labelC = (TextView)findViewById(R.id.ml_labelC);
 
+        led_HOLD = (ImageView) findViewById(R.id.led_HOLD);
+        led_START = (ImageView) findViewById(R.id.led_START);
+
+        led_HOLD.setVisibility(View.INVISIBLE);
+        led_START.setVisibility(View.INVISIBLE);
 
         t.setAnimation(AnimationUtils.loadAnimation(this, R.anim.blink));
 
@@ -108,6 +117,12 @@ public class MainActivity extends AppCompatActivity
         b.setOnClickListener((View.OnClickListener)this);
 
         b = (Button)findViewById(R.id.but_ONOFF);
+        b.setOnClickListener((View.OnClickListener)this);
+
+        b = (Button)findViewById(R.id.but_START);
+        b.setOnClickListener((View.OnClickListener)this);
+
+        b = (Button)findViewById(R.id.but_HOLD);
         b.setOnClickListener((View.OnClickListener)this);
 
 
@@ -142,6 +157,7 @@ public class MainActivity extends AppCompatActivity
                     val_other.setText("0,00");
                     val_volume.setText("0,00");
                     setView("RATE:","VTBI:","VOLUME","Vol","VTBI","","ml/h","ml","ml");
+                    led_HOLD.setVisibility(View.VISIBLE);
                     Snackbar.make(v, "Device turned on", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
                 }
                 else if (invoke_per_Turn_OFF()) {
@@ -151,7 +167,21 @@ public class MainActivity extends AppCompatActivity
                     val_other.setText("");
                     val_volume.setText("");
                     setView("","","","","","","","","");
+                    led_HOLD.setVisibility(View.INVISIBLE);
                     Snackbar.make(v, "Device turned off", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
+                }
+                break;
+
+            case R.id.but_START: /** Button START Clicked */
+                if (true /*invoke_per_Click_UP()*/) {
+                    led_START.setVisibility(View.VISIBLE);
+                }
+                break;
+
+            case R.id.but_HOLD: /** Button HOLD Clicked */
+                if (true /*invoke_per_Click_UP()*/) {
+                    led_HOLD.setVisibility(View.VISIBLE);
+                    led_START.setVisibility(View.INVISIBLE);
                 }
                 break;
 

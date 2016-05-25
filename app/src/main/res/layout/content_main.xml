@@ -35,6 +35,30 @@
         android:layout_marginRight="-10dp"
         android:layout_marginLeft="-10dp" />
 
+    <ImageView
+        android:id="@+id/led_HOLD"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/led_hold"
+        android:layout_alignRight="@+id/image_areas"
+        android:layout_alignEnd="@+id/image_areas"
+        android:layout_marginTop="-10dp"
+        android:layout_marginRight="-10dp"
+        android:layout_marginLeft="-10dp" />
+
+    <ImageView
+        android:id="@+id/led_START"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/led_start"
+        android:layout_alignRight="@+id/image_areas"
+        android:layout_alignEnd="@+id/image_areas"
+        android:layout_marginTop="-10dp"
+        android:layout_marginRight="-10dp"
+        android:layout_marginLeft="-10dp" />
+
     <FrameLayout
         android:layout_width="157dp"
         android:layout_height="164dp"
@@ -66,39 +90,45 @@
             android:layout_marginTop="16dp"
             android:textColor="#fff"
             android:layout_marginLeft="0dp"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="5dp"
             android:layout_alignTop="@+id/image_areas"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="20,0" />
+            android:text="20,0"
+            android:gravity="right"
+            android:textAlignment="gravity" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:id="@+id/val_other"
             android:layout_marginTop="60dp"
             android:textColor="#fff"
             android:layout_marginLeft="0dp"
-            android:layout_marginStart="70dp"
+            android:layout_marginStart="30dp"
             android:layout_alignTop="@+id/image_areas"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="250,0" />
+            android:text="20,0"
+            android:gravity="right"
+            android:textAlignment="gravity" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:id="@+id/val_volume"
             android:layout_marginTop="100dp"
             android:textColor="#fff"
             android:layout_marginLeft="0dp"
-            android:layout_marginStart="70dp"
+            android:layout_marginStart="30dp"
             android:layout_alignTop="@+id/image_areas"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="250,0" />
+            android:text="20,0"
+            android:gravity="right"
+            android:textAlignment="gravity" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -313,6 +343,28 @@
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="45dp"
+        android:layout_height="35dp"
+        android:alpha="0"
+        android:id="@+id/but_START"
+        android:layout_below="@+id/but_VB_A"
+        android:layout_alignLeft="@+id/frameLayout"
+        android:layout_alignStart="@+id/frameLayout"
+        android:layout_marginTop="50dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="45dp"
+        android:layout_height="35dp"
+        android:alpha="0"
+        android:id="@+id/but_HOLD"
+        android:layout_below="@+id/but_VB_A"
+        android:layout_alignLeft="@+id/frameLayout"
+        android:layout_alignStart="@+id/frameLayout"
+        android:layout_marginTop="84dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="45dp"
         android:layout_height="30dp"
         android:alpha="0"
         android:id="@+id/but_ONOFF"
@@ -320,7 +372,7 @@
         android:layout_toRightOf="@+id/but_UP"
         android:layout_toEndOf="@+id/but_UP"
         android:layout_marginTop="75dp"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="30dp" />
 
 
 </RelativeLayout>
