@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/bkg"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Simulator of the behaviour of AlarisGP IV Infusion Pump "
+        android:id="@+id/textView"
+        android:layout_marginTop="53dp"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignRight="@+id/textView4"
+        android:layout_alignEnd="@+id/textView4"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@giocchi27"
+        android:id="@+id/textView2"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="67dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text="@string/github"
+        android:id="@+id/textView3"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:textColorLink="#f00" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is part of the project PVSio-web"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="***About AlarisGP Simulator***"
+        android:id="@+id/textView5"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="#000"
+        android:textColorHighlight="#f00" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageTwitter"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/twitter" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageGoogle"
+        android:src="@drawable/google"
+        android:layout_alignTop="@+id/imageTwitter"
+        android:layout_toRightOf="@+id/imageTwitter"
+        android:layout_toEndOf="@+id/imageTwitter" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageFacebook"
+        android:src="@drawable/facebook"
+        android:layout_alignTop="@+id/imageTwitter"
+        android:layout_toLeftOf="@+id/imageTwitter"
+        android:layout_toStartOf="@+id/imageTwitter" />
+
+</RelativeLayout>
