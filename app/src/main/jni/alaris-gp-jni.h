@@ -32,17 +32,6 @@ extern const D_64 max_bat;
 extern const D_64 maxinfuse;
 extern const D_64 maxtime;
 
-/**
- * Global variables.
- */
-D_64 display;
-D_64 step;
-D_64 Ceil;
-D_64 Floor;
-
-MachineState current_state;  //  Predefined variable for current state.
-MachineState previous_state;  //  Predefined variable for previous state.
-
 /** 'Enter' auxiliary function.
  *    \param newStateLabel a label to update the current state.
  *    \return void
