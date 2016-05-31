@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     ImageView led_START;
     ImageView led_ON;
 
-    private static final String TAG = "MyActivity";
+    private static final String TAG = "AlarisGPSimulator";
 
     static {
         System.loadLibrary("alaris-gp-jni");
@@ -129,8 +129,6 @@ public class MainActivity extends AppCompatActivity
         b = (Button)findViewById(R.id.but_HOLD);
         b.setOnClickListener((View.OnClickListener)this);
 
-
-        //new AlertDialog.Builder(this).setMessage(msg).show();
     }
 
     public void onClick(View v) {

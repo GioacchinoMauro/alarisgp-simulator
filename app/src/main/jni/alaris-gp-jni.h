@@ -25,8 +25,11 @@ typedef enum {
 /**
  * constants variables
  */
+extern const D_64 big_step;
 extern const D_64 MAX;
 extern const D_64 MIN;
+extern const D_64 small_step;
+extern const D_64 tiny_step;
 extern const D_64 infusemin;
 extern const D_64 max_bat;
 extern const D_64 maxinfuse;
