@@ -3,4 +3,16 @@
     <string name="about">About</string>
     <string name="share">Share</string>
     <string name="github"><a href="https://github.com/GioacchinoMauro/alarisgp-simulator/">github.com/GioacchinoMauro/alarisgp-simulator/</a></string>
+    <string-array name="vtbi_array">
+        <item>3000 ml</item>
+        <item>2000 ml</item>
+        <item>1500 ml</item>
+        <item>1000 ml</item>
+        <item>500 ml</item>
+        <item>250 ml</item>
+        <item>200 ml</item>
+        <item>100 ml</item>
+        <item>50 ml</item>
+        <item>0 ml</item>
+    </string-array>
 </resources>

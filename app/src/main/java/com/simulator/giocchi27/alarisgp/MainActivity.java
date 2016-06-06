@@ -2,15 +2,18 @@ package com.simulator.giocchi27.alarisgp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import android.widget.Toast;
@@ -19,8 +22,8 @@ public class MainActivity extends AppCompatActivity
     implements View.OnClickListener{
 
     TextView t;
-    TextView val_using;
-    TextView val_other;
+    TextView val_infusing;
+    TextView val_vtbi;
     TextView val_volume;
     TextView labelA;
     TextView labelB;
@@ -38,6 +41,12 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "AlarisGPSimulator";
 
+    private enum Mode{
+        INFUSING, VTBI, VTBIDONE
+    }
+
+    public Mode mode = Mode.INFUSING;
+
     static {
         System.loadLibrary("alaris-gp-jni");
     }
@@ -47,16 +56,29 @@ public class MainActivity extends AppCompatActivity
     public native void invoke_Click_up();
     public native void invoke_Click_DOWN();
     public native void invoke_Click_down();
+    public native void invoke_VTBI_Click_UP();
+    public native void invoke_VTBI_Click_up();
+    public native void invoke_VTBI_Click_DOWN();
+    public native void invoke_VTBI_Click_down();
     public native void invoke_Turn_ON();
     public native void invoke_Turn_OFF();
+    public native boolean invoke_pause();
+    public native boolean invoke_start();
+    public native boolean invoke_tick();
     public native boolean invoke_per_Click_UP();
     public native boolean invoke_per_Click_up();
     public native boolean invoke_per_Click_DOWN();
     public native boolean invoke_per_Click_down();
     public native boolean invoke_per_Turn_ON();
     public native boolean invoke_per_Turn_OFF();
-    public native float invoke_GetDisplay();
+    public native boolean invoke_per_pause();
+    public native boolean invoke_per_start();
+    public native boolean invoke_per_tick();
+    public native float invoke_GetInfusionrate();
+    public native float invoke_GetVTBI();
+    public native float invoke_GetVolumeinfused();
 
+    CountDownTimer tick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +98,8 @@ public class MainActivity extends AppCompatActivity
         }*/
 
         t = (TextView)findViewById(com.simulator.giocchi27.alarisgp.R.id.display);
-        val_using = (TextView)findViewById(R.id.val_using);
-        val_other = (TextView)findViewById(R.id.val_other);
+        val_infusing = (TextView)findViewById(R.id.val_infusing);
+        val_vtbi = (TextView)findViewById(R.id.val_vtbi);
         val_volume = (TextView)findViewById(R.id.val_volume);
         labelA = (TextView)findViewById(R.id.labelA);
         labelB = (TextView)findViewById(R.id.labelB);
@@ -137,28 +159,42 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.but_VB_A: /** Virtual Button A Clicked */
                 t.setText("ON HOLD - SET RATE");
-                val_using = (TextView)findViewById(R.id.val_using);
-                val_other = (TextView)findViewById(R.id.val_other);
+                mode = Mode.INFUSING;       //to unlock infusing change
+                val_infusing.setText("" + String.format("%.01f", invoke_GetInfusionrate()));
+                val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                val_volume.setText("" + String.format("%.01f", invoke_GetVolumeinfused()));
+                setView("RATE:","VTBI:","VOLUME:","Vol","VTBI","","ml/h","ml","ml");
                 break;
 
             case R.id.but_VB_B: /** Virtual Button B Clicked */
                 t.setText("ON HOLD - SET VTBI");
-                val_using = (TextView)findViewById(R.id.val_other);
-                val_other = (TextView)findViewById(R.id.val_using);
+                mode = Mode.VTBI;       // to unlock vtbi change
+                t.setText("VTBI");
+                val_infusing.setText("");
+                val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                val_volume.setText("");
+                setView("","VTBI:","","OK","","","","ml","");
+
                 break;
 
             case R.id.but_VB_C: /** Virtual Button C Clicked */
-                t.setText("Button C");
+                if ( mode == Mode.VTBIDONE){
+                    val_infusing.setText("" + String.format("%.01f", invoke_GetInfusionrate()));
+                    val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                    val_volume.setText("" + String.format("%.01f", invoke_GetVolumeinfused()));
+                    setView("RATE:","VTBI:","VOLUME:","Vol","VTBI","","ml/h","ml","ml");
+                    mode = Mode.INFUSING;
+                }
                 break;
 
             case R.id.but_ONOFF: /** Button ON/OFF Clicked */
                 if (invoke_per_Turn_ON()) {
                     invoke_Turn_ON();
                     t.setText("ON HOLD - SET RATE");
-                    val_using.setText("" + String.format("%.01f", invoke_GetDisplay())); // it starts with volume
-                    val_other.setText("0,00");
-                    val_volume.setText("0,00");
-                    setView("RATE:","VTBI:","VOLUME","Vol","VTBI","","ml/h","ml","ml");
+                    val_infusing.setText("" + String.format("%.01f", invoke_GetInfusionrate()));
+                    val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                    val_volume.setText("" + String.format("%.01f", invoke_GetVolumeinfused()));
+                    setView("RATE:","VTBI:","VOLUME:","Vol","VTBI","","ml/h","ml","ml");
                     led_HOLD.setVisibility(View.VISIBLE);
                     led_ON.setVisibility(View.VISIBLE);
                     Snackbar.make(v, "Device turned on", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
@@ -166,8 +202,8 @@ public class MainActivity extends AppCompatActivity
                 else if (invoke_per_Turn_OFF()) {
                     invoke_Turn_OFF();
                     t.setText("");
-                    val_using.setText("");
-                    val_other.setText("");
+                    val_infusing.setText("");
+                    val_vtbi.setText("");
                     val_volume.setText("");
                     setView("","","","","","","","","");
                     led_HOLD.setVisibility(View.INVISIBLE);
@@ -177,183 +213,117 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.but_START: /** Button START Clicked */
-                if (true /*invoke_per_Click_UP()*/) {
-                    led_START.setVisibility(View.VISIBLE);
+                if (mode == Mode.INFUSING) {
+                    if (invoke_per_start()) {
+                        //led_START.setVisibility(View.VISIBLE);
+                        led_START.setAnimation(AnimationUtils.loadAnimation(this, R.anim.blink));
+                        invoke_start();
+                        tick = new CountDownTimer(300000, 1000) {
+
+                            public void onTick(long millisUntilFinished) {
+                                t.setText("INFUSING");
+                                val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                                val_volume.setText("" + String.format("%.01f", invoke_GetVolumeinfused()));
+                                if (!infusing()) {
+                                    this.cancel();
+                                    t.setText("VTBIDONE");
+                                    val_infusing.setText("");
+                                    val_vtbi.setText("");
+                                    val_volume.setText("");
+                                    setView("", "", "", "", "", "CANCEL", "", "", "");
+                                }
+                            }
+
+                            public void onFinish() {
+                                Log.v(TAG, "VTBIDONE");
+                            }
+                        }.start();
+                    }
                 }
                 break;
 
             case R.id.but_HOLD: /** Button HOLD Clicked */
-                if (true /*invoke_per_Click_UP()*/) {
-                    led_HOLD.setVisibility(View.VISIBLE);
-                    led_START.setVisibility(View.INVISIBLE);
+                if (mode == Mode.INFUSING) {
+                    if (invoke_per_pause()) {
+                        t.setText("ON HOLD");
+                        led_HOLD.setVisibility(View.VISIBLE);
+                        //led_START.setVisibility(View.INVISIBLE);
+                        led_START.clearAnimation();
+                        invoke_pause();
+                        tick.cancel();
+                    }
                 }
                 break;
 
             case R.id.but_UP: /** Button UP Clicked */
-                if (invoke_per_Click_UP()) {
-                    invoke_Click_UP();
-                    t.setText("Button UP!");
-                    val_using.setText("" + String.format("%.01f", invoke_GetDisplay()));
+                if (mode == Mode.INFUSING) {
+                    if (invoke_per_Click_UP()) {
+                        invoke_Click_UP();
+                        //t.setText("Button UP!");
+                        val_infusing.setText("" + String.format("%.01f", invoke_GetInfusionrate()));
+                    }
+                }
+                if (mode == Mode.VTBI) {
+                    if (invoke_per_Click_UP()) {
+                        invoke_VTBI_Click_UP();
+                        //t.setText("Button UP!");
+                        val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                    }
                 }
                 break;
 
             case R.id.but_up: /** Button up Clicked */
-                if (invoke_per_Click_up()) {
-                    invoke_Click_up();
-                    t.setText("Button up!");
-                    val_using.setText("" + String.format("%.01f", invoke_GetDisplay()));
+                if (mode == Mode.INFUSING) {
+                    if (invoke_per_Click_up()) {
+                        invoke_Click_up();
+                        //t.setText("Button up!");
+                        val_infusing.setText("" + String.format("%.01f", invoke_GetInfusionrate()));
+                    }
+                }
+                if (mode == Mode.VTBI) {
+                    if (invoke_per_Click_up()) {
+                        invoke_VTBI_Click_up();
+                        //t.setText("Button up!");
+                        val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                    }
                 }
                 break;
 
             case R.id.but_DOWN: /** Button DOWN Clicked */
-                if (invoke_per_Click_DOWN()) {
-                    invoke_Click_DOWN();
-                    t.setText("Button DOWN!");
-                    val_using.setText("" + String.format("%.01f", invoke_GetDisplay()));
+                if (mode == Mode.INFUSING) {
+                    if (invoke_per_Click_DOWN()) {
+                        invoke_Click_DOWN();
+                        //t.setText("Button DOWN!");
+                        val_infusing.setText("" + String.format("%.01f", invoke_GetInfusionrate()));
+                    }
+                }
+                if (mode == Mode.VTBI) {
+                    if (invoke_per_Click_DOWN()) {
+                        invoke_VTBI_Click_DOWN();
+                        //t.setText("Button DOWN!");
+                        val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                    }
                 }
                 break;
 
             case R.id.but_down: /** Button down Clicked */
-                if (invoke_per_Click_down()) {
-                    invoke_Click_down();
-                    t.setText("Button down!");
-                    val_using.setText("" + String.format("%.01f", invoke_GetDisplay()));
+                if (mode == Mode.INFUSING) {
+                    if (invoke_per_Click_down()) {
+                        invoke_Click_down();
+                        //t.setText("Button down!");
+                        val_infusing.setText("" + String.format("%.01f", invoke_GetInfusionrate()));
+                    }
+                }
+                if (mode == Mode.VTBI) {
+                    if (invoke_per_Click_down()) {
+                        invoke_VTBI_Click_down();
+                        //t.setText("Button down!");
+                        val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                    }
                 }
                 break;
         } // end switch
     }
-
-    /*public boolean onTouch (View v, MotionEvent ev)
-    {
-        boolean handledHere = false;
-
-        final int action = ev.getAction();
-
-        final int evX = (int) ev.getX();
-        final int evY = (int) ev.getY();
-
-        // If we cannot find the imageView, return.
-        ImageView imageView = (ImageView) v.findViewById (com.simulator.giocchi27.alarisgp.R.id.image);
-        if (imageView == null) return false;
-
-        // When the action is Down, see if we should show the "pressed" image for the default image.
-        // We do this when the default image is showing. That condition is detectable by looking at the
-        // tag of the view. If it is null or contains the resource number of the default image, display the pressed image.
-        Integer tagNum = (Integer) imageView.getTag ();
-        int currentResource = (tagNum == null) ? com.simulator.giocchi27.alarisgp.R.drawable.bkg : tagNum.intValue ();
-
-
-        // Now that we know the current resource being displayed we can handle the DOWN and UP events.
-
-        switch (action) {
-            case MotionEvent.ACTION_DOWN :
-                if (currentResource == com.simulator.giocchi27.alarisgp.R.drawable.bkg) {
-                    handledHere = true;
-
-                } else handledHere = true;
-                break;
-
-            case MotionEvent.ACTION_UP :
-
-                // On the UP, we do the click action.
-                // The hidden image (image_areas) has three different hotspots on it.
-                // The colors are red, blue, and yellow.
-                // Use image_areas to determine which region the user touched.
-                int touchColor = getHotspotColor (com.simulator.giocchi27.alarisgp.R.id.image_areas, evX, evY);
-
-                //Log.v(TAG, "Touch coordinates : " + String.valueOf(ev.getX()) + "," + String.valueOf(ev.getY()) + "and pixelcolor is: " + touchColor);
-
-                // Compare the touchColor to the expected values. Switch to a different image, depending on what color was touched.
-                // Note that we use a Color Tool object to test whether the observed color is close enough to the real color to
-                // count as a match. We do this because colors on the screen do not match the map exactly because of scaling and
-                // varying pixel density.
-                ColorTool ct = new ColorTool ();
-                int tolerance = 50;
-
-                if (ct.closeMatch (Color.RED, touchColor, tolerance)) {
-                    //Button UP
-                    if (invoke_per_Click_UP()) {
-                        invoke_Click_UP();
-                        t.setText("Button UP!");
-                        volumeD.setText("" + String.format("%.02f", invoke_GetDisplay()));
-                    }
-                }
-                else if (ct.closeMatch (Color.BLUE, touchColor, tolerance)) {
-                    //ON - OFF
-                    if (invoke_per_Turn_ON()) {
-                        invoke_Turn_ON();
-                        t.setText("Turn ON!");
-                        volumeD.setText("" + String.format("%.02f", invoke_GetDisplay()));
-                        vtbiD.setText("0.00");
-                        setView("Vollume:","VTBI:","A","B","C");
-                        Snackbar.make(v, "Device turned on", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
-                    }
-                    else if (invoke_per_Turn_OFF()) {
-                        invoke_Turn_OFF();
-                        t.setText("");
-                        volumeD.setText("");
-                        vtbiD.setText("");
-                        setView("","","","","");
-                        Snackbar.make(v, "Device turned off", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
-                    }
-                }
-                else if (ct.closeMatch (Color.YELLOW, touchColor, tolerance)) {
-                    //Button DOWN
-                    if (invoke_per_Click_DOWN()) {
-                        invoke_Click_DOWN();
-                        //volume--;
-                        t.setText("Button DOWN!");
-                        volumeD.setText("" + String.format("%.02f", invoke_GetDisplay()));
-                    }
-                }
-                *//*else if ((Color.BLACK -  touchColor) < tolerance) { //TODO fix it!
-                    //Buttons UP
-                    //volume++;
-                    //t.setText("Button UP!");
-                    //volumeD.setText("" +volume);
-                }
-                else if (ct.closeMatch (Color.WHITE, touchColor, tolerance)) {
-                    //Button DOWN
-                    invokeClick_DOWN();
-
-                    //volume--;
-                    t.setText("Button DOWN!");
-                    volumeD.setText("" +invokeGetDisplay());
-                }*//*
-
-                handledHere = true;
-                break;
-
-            default:
-                handledHere = false;
-        } // end switch
-
-        return handledHere;
-    }
-
-    *//**
-     * Get the color from the hotspot image at point x-y.
-     *
-     *//*
-
-    public int getHotspotColor (int hotspotId, int x, int y) {
-        ImageView img = (ImageView) findViewById (hotspotId);
-        if (img == null) {
-            Log.d ("ImageAreasActivity", "Hot spot image not found");
-            return 0;
-        } else {
-            img.setDrawingCacheEnabled(true);
-            Bitmap hotspots = Bitmap.createBitmap(img.getDrawingCache());
-            if (hotspots == null) {
-                Log.d ("ImageAreasActivity", "Hot spot bitmap was not created");
-                return 0;
-            } else {
-                img.setDrawingCacheEnabled(false);
-                return hotspots.getPixel(x, y);
-            }
-        }
-    }
-*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -390,11 +360,29 @@ public class MainActivity extends AppCompatActivity
         labelC.setText(TextLabelC);
         label_VB_A.setText(Text_VB_A);
         label_VB_B.setText(Text_VB_B);
-        label_VB_C.setText(""+ Text_VB_C);
+        label_VB_C.setText(Text_VB_C);
         ml_labelA.setText(Text_ml_labelA);
         ml_labelB.setText(Text_ml_labelB);
         ml_labelC.setText(Text_ml_labelC);
     }
 
+    public boolean infusing ()
+    {
+        if (invoke_GetVTBI() == 0) {
+            if (invoke_per_pause()) {
+                led_HOLD.setVisibility(View.VISIBLE);
+                //led_START.setVisibility(View.INVISIBLE);
+                led_START.clearAnimation();
+                invoke_pause();
+            }
+            mode = Mode.VTBIDONE;
+            return false;
+        }
+        if(invoke_per_tick()){
+            invoke_tick();
+            return true;
+        }
+        return false;
+    }
 
 }
