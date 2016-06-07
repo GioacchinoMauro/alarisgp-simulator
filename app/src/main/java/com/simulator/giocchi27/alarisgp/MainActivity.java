@@ -1,6 +1,7 @@
 package com.simulator.giocchi27.alarisgp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -39,10 +41,12 @@ public class MainActivity extends AppCompatActivity
     ImageView led_START;
     ImageView led_ON;
 
+    ListView VTBIlist;
+
     private static final String TAG = "AlarisGPSimulator";
 
     private enum Mode{
-        INFUSING, VTBI, VTBIDONE
+        INFUSING, VTBI, VTBIDONE, VTBIBAGS
     }
 
     public Mode mode = Mode.INFUSING;
@@ -62,9 +66,9 @@ public class MainActivity extends AppCompatActivity
     public native void invoke_VTBI_Click_down();
     public native void invoke_Turn_ON();
     public native void invoke_Turn_OFF();
-    public native boolean invoke_pause();
-    public native boolean invoke_start();
-    public native boolean invoke_tick();
+    public native void invoke_pause();
+    public native void invoke_start();
+    public native void invoke_tick();
     public native boolean invoke_per_Click_UP();
     public native boolean invoke_per_Click_up();
     public native boolean invoke_per_Click_DOWN();
@@ -77,8 +81,12 @@ public class MainActivity extends AppCompatActivity
     public native float invoke_GetInfusionrate();
     public native float invoke_GetVTBI();
     public native float invoke_GetVolumeinfused();
+    public native void invoke_SetVTBI(float jf);
 
     CountDownTimer tick;
+
+    int indexVTBIBags = 5;
+    float[] VTBIvalues = {3000.0f,2000.0f,1500.0f,1000.0f,500.0f,250.0f,200.0f,100.0f,50.0f,0.0f};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +104,25 @@ public class MainActivity extends AppCompatActivity
         if (iv != null) {
             iv.setOnTouchListener (this);
         }*/
+
+        VTBIlist = (ListView)findViewById(R.id.VTBIlistView);
+        VTBIlist.setVisibility((View.INVISIBLE));
+        String[] VTBIstrings = new String[]{
+                "3000 ml",
+                "2000 ml",
+                "1500 ml",
+                "1000 ml",
+                "500 ml",
+                "250 ml",
+                "200 ml",
+                "100 ml",
+                "50 ml",
+                "0 ml"
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.custom_listview, VTBIstrings);
+
+        VTBIlist.setAdapter(adapter);
+        VTBIlist.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         t = (TextView)findViewById(com.simulator.giocchi27.alarisgp.R.id.display);
         val_infusing = (TextView)findViewById(R.id.val_infusing);
@@ -158,11 +185,17 @@ public class MainActivity extends AppCompatActivity
         switch(v.getId()){
 
             case R.id.but_VB_A: /** Virtual Button A Clicked */
+                if (mode == Mode.VTBIBAGS){
+                    //TODO setVTBI with value VTBIvalues[indexVTBIBags]
+                    invoke_SetVTBI(VTBIvalues[indexVTBIBags]);
+                    Log.v(TAG, "VTBI should be: " + VTBIvalues[indexVTBIBags]);
+                }
                 t.setText("ON HOLD - SET RATE");
                 mode = Mode.INFUSING;       //to unlock infusing change
                 val_infusing.setText("" + String.format("%.01f", invoke_GetInfusionrate()));
                 val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
                 val_volume.setText("" + String.format("%.01f", invoke_GetVolumeinfused()));
+                VTBIlist.setVisibility((View.INVISIBLE));
                 setView("RATE:","VTBI:","VOLUME:","Vol","VTBI","","ml/h","ml","ml");
                 break;
 
@@ -173,8 +206,7 @@ public class MainActivity extends AppCompatActivity
                 val_infusing.setText("");
                 val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
                 val_volume.setText("");
-                setView("","VTBI:","","OK","","","","ml","");
-
+                setView("","VTBI:","","OK","","BAGS","","ml","");
                 break;
 
             case R.id.but_VB_C: /** Virtual Button C Clicked */
@@ -184,6 +216,16 @@ public class MainActivity extends AppCompatActivity
                     val_volume.setText("" + String.format("%.01f", invoke_GetVolumeinfused()));
                     setView("RATE:","VTBI:","VOLUME:","Vol","VTBI","","ml/h","ml","ml");
                     mode = Mode.INFUSING;
+                }
+                if ( mode == Mode.VTBI){
+                    t.setText("");
+                    val_infusing.setText("");
+                    val_vtbi.setText("");
+                    val_volume.setText("");
+                    VTBIlist.setVisibility((View.VISIBLE));
+                    VTBIlist.getChildAt(indexVTBIBags).setBackgroundColor(Color.DKGRAY);
+                    setView("","","","OK","","","","","");
+                    mode = Mode.VTBIBAGS;
                 }
                 break;
 
@@ -270,6 +312,11 @@ public class MainActivity extends AppCompatActivity
                         val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
                     }
                 }
+                if (mode == Mode.VTBIBAGS){
+                    VTBIlist.getChildAt(indexVTBIBags).setBackgroundColor(Color.TRANSPARENT);
+                    indexVTBIBags = 0;
+                    VTBIlist.getChildAt(indexVTBIBags).setBackgroundColor(Color.DKGRAY);
+                }
                 break;
 
             case R.id.but_up: /** Button up Clicked */
@@ -285,6 +332,12 @@ public class MainActivity extends AppCompatActivity
                         invoke_VTBI_Click_up();
                         //t.setText("Button up!");
                         val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                    }
+                }
+                if (mode == Mode.VTBIBAGS){
+                    if ( (indexVTBIBags - 1 ) >= 0 ) {
+                        VTBIlist.getChildAt(indexVTBIBags).setBackgroundColor(Color.TRANSPARENT);
+                        VTBIlist.getChildAt(--indexVTBIBags).setBackgroundColor(Color.DKGRAY);
                     }
                 }
                 break;
@@ -304,6 +357,11 @@ public class MainActivity extends AppCompatActivity
                         val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
                     }
                 }
+                if (mode == Mode.VTBIBAGS){
+                    VTBIlist.getChildAt(indexVTBIBags).setBackgroundColor(Color.TRANSPARENT);
+                    indexVTBIBags = VTBIlist.getChildCount() - 1 ;
+                    VTBIlist.getChildAt(indexVTBIBags).setBackgroundColor(Color.DKGRAY);
+                }
                 break;
 
             case R.id.but_down: /** Button down Clicked */
@@ -319,6 +377,12 @@ public class MainActivity extends AppCompatActivity
                         invoke_VTBI_Click_down();
                         //t.setText("Button down!");
                         val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
+                    }
+                }
+                if (mode == Mode.VTBIBAGS){
+                    if ( (indexVTBIBags + 1) < VTBIlist.getChildCount()){
+                        VTBIlist.getChildAt(indexVTBIBags).setBackgroundColor(Color.TRANSPARENT);
+                        VTBIlist.getChildAt(++indexVTBIBags).setBackgroundColor(Color.DKGRAY);
                     }
                 }
                 break;

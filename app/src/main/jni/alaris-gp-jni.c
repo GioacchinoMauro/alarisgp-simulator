@@ -1600,3 +1600,12 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1GetVolumeinfused(
 {
     return volumeinfused;
 }
+
+JNIEXPORT void JNICALL
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1SetVTBI(
+        JNIEnv* env,
+        jobject callingObject,
+        jfloat ji)
+{
+    vtbi = ji;
+}

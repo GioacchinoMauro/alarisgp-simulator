@@ -462,6 +462,9 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1GetVTBI(JNIEnv *env, 
 JNIEXPORT jfloat JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1GetVolumeinfused(JNIEnv *env, jobject callingObject);
 
+JNIEXPORT void JNICALL
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1SetVTBI(JNIEnv* env, jobject callingObject, jfloat ji);
+
 
 /** ---------------------------------------------------------------
 *   C code generated using PVSio-web MisraCPrinter ver 0.1
