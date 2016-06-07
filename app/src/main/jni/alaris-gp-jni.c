@@ -1601,6 +1601,22 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1GetVolumeinfused(
     return volumeinfused;
 }
 
+JNIEXPORT jfloat JNICALL
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1GetTime(
+        JNIEnv *env,
+        jobject callingObject)
+{
+    return Time;
+}
+
+JNIEXPORT jfloat JNICALL
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1GetElapsedtime(
+        JNIEnv *env,
+        jobject callingObject)
+{
+    return elapsedtime;
+}
+
 JNIEXPORT void JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1SetVTBI(
         JNIEnv* env,

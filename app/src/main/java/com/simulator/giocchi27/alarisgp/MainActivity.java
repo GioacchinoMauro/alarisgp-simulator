@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity
     TextView val_infusing;
     TextView val_vtbi;
     TextView val_volume;
+    TextView val_time;
     TextView labelA;
     TextView labelB;
     TextView labelC;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     ImageView led_HOLD;
     ImageView led_START;
     ImageView led_ON;
+    ImageView time_img;
 
     ListView VTBIlist;
 
@@ -81,6 +83,8 @@ public class MainActivity extends AppCompatActivity
     public native float invoke_GetInfusionrate();
     public native float invoke_GetVTBI();
     public native float invoke_GetVolumeinfused();
+    public native float invoke_GetTime();
+    public native float invoke_GetElapsedtime();
     public native void invoke_SetVTBI(float jf);
 
     CountDownTimer tick;
@@ -128,6 +132,7 @@ public class MainActivity extends AppCompatActivity
         val_infusing = (TextView)findViewById(R.id.val_infusing);
         val_vtbi = (TextView)findViewById(R.id.val_vtbi);
         val_volume = (TextView)findViewById(R.id.val_volume);
+        val_time = (TextView)findViewById(R.id.Time);
         labelA = (TextView)findViewById(R.id.labelA);
         labelB = (TextView)findViewById(R.id.labelB);
         labelC = (TextView)findViewById(R.id.labelC);
@@ -141,10 +146,12 @@ public class MainActivity extends AppCompatActivity
         led_HOLD = (ImageView) findViewById(R.id.led_HOLD);
         led_START = (ImageView) findViewById(R.id.led_START);
         led_ON = (ImageView) findViewById(R.id.led_ON);
+        time_img = (ImageView) findViewById(R.id.time_image);
 
         led_HOLD.setVisibility(View.INVISIBLE);
         led_START.setVisibility(View.INVISIBLE);
         led_ON.setVisibility(View.INVISIBLE);
+        time_img.setVisibility(View.INVISIBLE);
 
         t.setAnimation(AnimationUtils.loadAnimation(this, R.anim.blink));
 
@@ -186,9 +193,7 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.but_VB_A: /** Virtual Button A Clicked */
                 if (mode == Mode.VTBIBAGS){
-                    //TODO setVTBI with value VTBIvalues[indexVTBIBags]
                     invoke_SetVTBI(VTBIvalues[indexVTBIBags]);
-                    Log.v(TAG, "VTBI should be: " + VTBIvalues[indexVTBIBags]);
                 }
                 t.setText("ON HOLD - SET RATE");
                 mode = Mode.INFUSING;       //to unlock infusing change
@@ -206,6 +211,8 @@ public class MainActivity extends AppCompatActivity
                 val_infusing.setText("");
                 val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
                 val_volume.setText("");
+                val_time.setText("");
+                time_img.setVisibility(View.INVISIBLE);
                 setView("","VTBI:","","OK","","BAGS","","ml","");
                 break;
 
@@ -247,9 +254,11 @@ public class MainActivity extends AppCompatActivity
                     val_infusing.setText("");
                     val_vtbi.setText("");
                     val_volume.setText("");
+                    val_time.setText("");
                     setView("","","","","","","","","");
                     led_HOLD.setVisibility(View.INVISIBLE);
                     led_ON.setVisibility(View.INVISIBLE);
+                    time_img.setVisibility(View.INVISIBLE);
                     Snackbar.make(v, "Device turned off", Snackbar.LENGTH_LONG).setAction("Action", null).show();;
                 }
                 break;
@@ -266,12 +275,15 @@ public class MainActivity extends AppCompatActivity
                                 t.setText("INFUSING");
                                 val_vtbi.setText("" + String.format("%.01f", invoke_GetVTBI()));
                                 val_volume.setText("" + String.format("%.01f", invoke_GetVolumeinfused()));
+                                setTime(invoke_GetTime());
                                 if (!infusing()) {
                                     this.cancel();
                                     t.setText("VTBIDONE");
                                     val_infusing.setText("");
                                     val_vtbi.setText("");
                                     val_volume.setText("");
+                                    val_time.setText("");
+                                    time_img.setVisibility(View.INVISIBLE);
                                     setView("", "", "", "", "", "CANCEL", "", "", "");
                                 }
                             }
@@ -435,7 +447,6 @@ public class MainActivity extends AppCompatActivity
         if (invoke_GetVTBI() == 0) {
             if (invoke_per_pause()) {
                 led_HOLD.setVisibility(View.VISIBLE);
-                //led_START.setVisibility(View.INVISIBLE);
                 led_START.clearAnimation();
                 invoke_pause();
             }
@@ -447,6 +458,15 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         return false;
+    }
+
+    public void setTime(float t){
+        float time = t;
+        int hours = (int) time;
+        int minutes = (int) (60 * (time - hours));
+        int seconds = (int) (((60 * (time - hours)) - minutes) * 60);
+        val_time.setText("" + hours + "h " + minutes + "m " + seconds + "s");
+        time_img.setVisibility(View.VISIBLE);
     }
 
 }
