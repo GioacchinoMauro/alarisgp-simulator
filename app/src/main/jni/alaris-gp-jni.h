@@ -60,7 +60,7 @@ JNIEXPORT void JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Init(JNIEnv *env, jobject callingObject, jobject obj);
 
 /** Click_alaris_DOWN transition function.
- * This function is generated merging two or more homonyms trasitions.
+ * This function is generated merging two or more triggers with the same name.
  *    It changes state from "on" to "on" when condition [val == min] holds,
  *     from "on" to "on" when condition [val < 10] holds,
  *     from "on" to "on" when condition [val >= 10 && val < 100] holds,
@@ -75,7 +75,7 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1DOWN(JNIEnv *e
        jobject instance);
 
 /** Click_down transition function.
- * This function is generated merging two or more homonyms trasitions.
+ * This function is generated merging two or more triggers with the same name.
  *    It changes state from "on" to "on" when condition [val == min] holds,
  *     from "on" to "on" when condition [val < 10] holds,
  *     from "on" to "on" when condition [val >= 10 && val < 100] holds,
@@ -89,7 +89,7 @@ JNIEXPORT void JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1down(JNIEnv *env, jobject instance);
 
 /** Click_UP transition function.
- * This function is generated merging two or more homonyms trasitions.
+ * This function is generated merging two or more triggers with the same name.
  *    It changes state from "on" to "on" when condition [val == max] holds,
  *     from "on" to "on" when condition [val < 10] holds,
  *     from "on" to "on" when condition [val >= 10 && val < 100] holds,
@@ -103,21 +103,21 @@ JNIEXPORT void JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1UP(JNIEnv *env, jobject instance);
 
 /** Click_up transition function.
- * This function is generated merging two or more homonyms trasitions.
+ * This function is generated merging two or more triggers with the same name.
  *    It changes state from "on" to "on" when condition [val == max] holds,
  *     from "on" to "on" when condition [val < 10] holds,
  *     from "on" to "on" when condition [val >= 10 && val < 100] holds,
  *     from "on" to "on" when condition [val >= 100 && val < 1000] holds,
  *     from "on" to "on" when condition [val >= 1000] holds
  *
- *   \pre function is called from the right state ("on" in this case)
+ *    \pre function is called from the right state ("on" in this case)
  *    \post function is moving to the right state ("on" in this case)
  */
 JNIEXPORT void JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1up(JNIEnv *env, jobject instance);
 
 /** VTBI_Click_alaris_DOWN transition function.
- * This function is generated merging two or more homonyms trasitions.
+ * This function is generated merging two or more triggers with the same name.
  *    It changes state from "on" to "on" when condition [val == min] holds,
  *     from "on" to "on" when condition [val < 10] holds,
  *     from "on" to "on" when condition [val >= 10 && val < 100] holds,
@@ -128,11 +128,11 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1up(JNIEnv *env
  *    \post function is moving to the right state ("on" in this case)
  */
 JNIEXPORT void JNICALL
-        Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1DOWN(JNIEnv *env,
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1DOWN(JNIEnv *env,
                                                                                jobject instance);
 
 /** VTBI_Click_down transition function.
- * This function is generated merging two or more homonyms trasitions.
+ * This function is generated merging two or more triggers with the same name.
  *    It changes state from "on" to "on" when condition [val == min] holds,
  *     from "on" to "on" when condition [val < 10] holds,
  *     from "on" to "on" when condition [val >= 10 && val < 100] holds,
@@ -143,10 +143,10 @@ JNIEXPORT void JNICALL
  *    \post function is moving to the right state ("on" in this case)
  */
 JNIEXPORT void JNICALL
-        Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1down(JNIEnv *env, jobject instance);
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1down(JNIEnv *env, jobject instance);
 
 /** VTBI_Click_UP transition function.
- * This function is generated merging two or more homonyms trasitions.
+ * This function is generated merging two or more triggers with the same name.
  *    It changes state from "on" to "on" when condition [val == max] holds,
  *     from "on" to "on" when condition [val < 10] holds,
  *     from "on" to "on" when condition [val >= 10 && val < 100] holds,
@@ -157,21 +157,21 @@ JNIEXPORT void JNICALL
  *    \post function is moving to the right state ("on" in this case)
  */
 JNIEXPORT void JNICALL
-        Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1UP(JNIEnv *env, jobject instance);
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1UP(JNIEnv *env, jobject instance);
 
 /** VTBI_Click_up transition function.
- * This function is generated merging two or more homonyms trasitions.
+ * This function is generated merging two or more triggers with the same name.
  *    It changes state from "on" to "on" when condition [val == max] holds,
  *     from "on" to "on" when condition [val < 10] holds,
  *     from "on" to "on" when condition [val >= 10 && val < 100] holds,
  *     from "on" to "on" when condition [val >= 100 && val < 1000] holds,
  *     from "on" to "on" when condition [val >= 1000] holds
  *
- *   \pre function is called from the right state ("on" in this case)
+ *    \pre function is called from the right state ("on" in this case)
  *    \post function is moving to the right state ("on" in this case)
  */
 JNIEXPORT void JNICALL
-        Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1up(JNIEnv *env, jobject instance);
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1up(JNIEnv *env, jobject instance);
 
 /** Turn_ON transition function.
  *    It changes state from "off" to "on".
@@ -197,12 +197,11 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Turn_1OFF(JNIEnv *env
  *
  *    
  *    \param st state structure pointer
- *    \return state structure
  *    \pre function is called from the right state ("INFUSING_BATT" or "INFUSING_MAINS" )
  *    \post function is moving to the right state ("on" )
  */
 JNIEXPORT void JNICALL
-        Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1pause(JNIEnv *env,jobject callingObject, jobject obj);
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1pause(JNIEnv *env,jobject callingObject, jobject obj);
 
 /** start transition function.
  * This function is generated merging two or more triggers with the same name.
@@ -222,12 +221,11 @@ JNIEXPORT void JNICALL
  *
  *    
  *    \param st state structure pointer
- *    \return state structure
  *    \pre function is called from the right state ("on" )
  *    \post function is moving to the right state ("INFUSING_BATT" or "INFUSING_MAINS" or "on" )
  */
 JNIEXPORT void JNICALL
-        Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1start(JNIEnv *env,jobject callingObject, jobject obj);
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1start(JNIEnv *env,jobject callingObject, jobject obj);
 
 /** tick transition function.
  * This function is generated merging two or more triggers with the same name.
@@ -373,58 +371,69 @@ JNIEXPORT void JNICALL
  *
  *    
  *    \param st state structure pointer
- *    \return state structure
  *    \pre function is called from the right state ("INFUSING_MAINS" or "INFUSING_BATT" )
  *    \post function is moving to the right state ("INFUSING_BATT" or "INFUSING_MAINS" )
  */
 JNIEXPORT void JNICALL
-        Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_tick(JNIEnv *env,jobject callingObject, jobject obj);
+Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_tick(JNIEnv *env,jobject callingObject, jobject obj);
 
 /** Click_DOWN permission function for transition.
- * Useful to check if functions are invoking on the correct state.
- *    \return a boolean
+ * Use to check if functions can be performed, it controls if the current state is eligible.
+ * (i.e., current state is "on")
+ *    \param st state structure pointer
+ *    \return boolean
  */
 JNIEXPORT jboolean JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1per_1Click_1DOWN(JNIEnv *env, jobject callingObject, jobject obj);
 
 /** Click_down permission function for transition.
- * Useful to check if functions are invoking on the correct state.
- *    \return a boolean
+ * Use to check if functions can be performed, it controls if the current state is eligible.
+ * (i.e., current state is "on")
+ *    \param st state structure pointer
+ *    \return boolean
  */
 JNIEXPORT jboolean JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1per_1Click_1down(JNIEnv *env, jobject callingObject, jobject obj);
 
 /** Click_UP permission function for transition.
- * Useful to check if functions are invoking on the correct state.
- *    \return a boolean
+ * Use to check if functions can be performed, it controls if the current state is eligible.
+ * (i.e., current state is "on")
+ *    \param st state structure pointer
+ *    \return boolean
  */
 JNIEXPORT jboolean JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1per_1Click_1UP(JNIEnv *env, jobject callingObject, jobject obj);
 
 /** Click_up permission function for transition.
- * Useful to check if functions are invoking on the correct state.
- *    \return a boolean
+ * Use to check if functions can be performed, it controls if the current state is eligible.
+ * (i.e., current state is "on")
+ *    \param st state structure pointer
+ *    \return boolean
  */
 JNIEXPORT jboolean JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1per_1Click_1up(JNIEnv *env, jobject callingObject, jobject obj);
 
 /** Turn_ON permission function for transition.
- * Useful to check if functions are invoking on the correct state.
- *    \return a boolean
+ * Use to check if functions can be performed, it controls if the current state is eligible.
+ * (i.e., current state is "off")
+ *    \param st state structure pointer
+ *    \return boolean
  */
 JNIEXPORT jboolean JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1per_1Turn_1ON(JNIEnv *env, jobject callingObject, jobject obj);
 
 /** Turn_OFF permission function for transition.
- * Useful to check if functions are invoking on the correct state.
- *    \return a boolean
+ * Use to check if functions can be performed, it controls if the current state is eligible.
+ * (i.e., current state is "on")
+ *    \param st state structure pointer
+ *    \return boolean
  */
 JNIEXPORT jboolean JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1per_1Turn_1OFF(JNIEnv *env, jobject callingObject, jobject obj);
 
 /** pause permission function for transition.
- * Use to check if functions can be performed, it controls if the current state is eligible.
- * (i.e., current state is "INFUSING_BATT" or "INFUSING_MAINS")
+ *  Use to check if functions can be performed, it controls if the current state is eligible.
+ *  (i.e., current state is "INFUSING_BATT" or "INFUSING_MAINS")
  *    \param st state structure pointer
  *    \return boolean
  */
@@ -432,8 +441,8 @@ JNIEXPORT jboolean JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1per_1pause(JNIEnv *env, jobject callingObject, jobject obj);
 
 /** start permission function for transition.
- * Use to check if functions can be performed, it controls if the current state is eligible.
- * (i.e., current state is "on")
+ *  Use to check if functions can be performed, it controls if the current state is eligible.
+ *  (i.e., current state is "on")
  *    \param st state structure pointer
  *    \return boolean
  */
@@ -441,8 +450,8 @@ JNIEXPORT jboolean JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1per_1start(JNIEnv *env, jobject callingObject, jobject obj);
 
 /** tick permission function for transition.
- * Use to check if functions can be performed, it controls if the current state is eligible.
- * (i.e., current state is "INFUSING_MAINS" or "INFUSING_BATT")
+ *  Use to check if functions can be performed, it controls if the current state is eligible.
+ *  (i.e., current state is "INFUSING_MAINS" or "INFUSING_BATT")
  *    \param st state structure pointer
  *    \return boolean
  */
