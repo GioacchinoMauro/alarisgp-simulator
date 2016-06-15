@@ -262,6 +262,7 @@ public class MainActivity extends AppCompatActivity
                         //led_START.setVisibility(View.VISIBLE);
                         led_START.setAnimation(AnimationUtils.loadAnimation(this, R.anim.blink));
                         invoke_start();
+                        led_HOLD.setVisibility(View.INVISIBLE);
 
                         tick = new CountDownTimer(300000, 1000) {
 

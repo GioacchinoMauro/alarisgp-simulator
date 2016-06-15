@@ -92,12 +92,12 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1DOWN(JNIEnv *e
 
     if ( (current_state == on) && (infusionrate > MIN) && (infusionrate < 100) ) {
         leave(on);
-        Ceil = (infusionrate * 10) -  fmod ((infusionrate * 10) , 1.0f);
+        Ceil = (infusionrate * 10.0f) -  fmod ((infusionrate * 10.0f) , 1.0f);
 
 #ifdef DEBUG        
         debug_print("Action Ceil = infusionrate - fmod ( infusionrate , 1.0f ) issued.\n");
 #endif
-        infusionrate = (Ceil - big_step) / 10;
+        infusionrate = (Ceil - big_step) / 10.0f;
 #ifdef DEBUG        
         debug_print("Action infusionrate = Ceil - big_step issued.\n");
 #endif       
@@ -131,13 +131,13 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1DOWN(JNIEnv *e
     }
     if ( (current_state == on) && (infusionrate >= 1000) ) {
         leave(on);
-        Ceil = ( infusionrate / 100.0f ) - fmod ( ( infusionrate / 100.0f ) , 1.0f );
+        Ceil = ( infusionrate / 1000.0f ) - fmod ( ( infusionrate / 1000.0f ) , 1.0f );
 #ifdef DEBUG        
-        debug_print("Action Ceil = ( infusionrate / 100.0f ) - fmod ( ( infusionrate / 100.0f ) , 1.0f ) issued.\n");
+        debug_print("Action Ceil = ( infusionrate / 1000.0f ) - fmod ( ( infusionrate / 1000.0f ) , 1.0f ) issued.\n");
 #endif 
-        infusionrate = ( Ceil - big_step ) * 100;
+        infusionrate = Ceil * 1000;
 #ifdef DEBUG        
-        debug_print("Action infusionrate = ( Ceil - big_step ) * 100 issued.\n");
+        debug_print("Action infusionrate = Ceil * 1000 issued.\n");
 #endif       
         enter(on);
         assert( current_state == on );
@@ -181,7 +181,7 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1down(JNIEnv *e
 #ifdef DEBUG        
         debug_print("Action Ceil = ( infusionrate / 10.0f ) - fmod ( ( infusionrate / 10.0f ) , 1.0f ) issued.\n");
 #endif 
-        infusionrate = ( Ceil - big_step ) * 10;
+        infusionrate = ( Ceil - small_step ) * 10;
 #ifdef DEBUG        
         debug_print("Action infusionrate = ( Ceil - big_step ) * 10 issued.\n");
 #endif       
@@ -223,11 +223,11 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1UP(JNIEnv *env
     }
     if ( (current_state == on) && (infusionrate < 100) ) {
         leave(on);
-        Floor = ((infusionrate * 10) + big_step) - fmod (((infusionrate * 10) + big_step) , 1.0f);
+        Floor = ( infusionrate ) - fmod ( ( infusionrate ) , 1.0f );
 #ifdef DEBUG
         debug_print("Action Floor = ( infusionrate - fmod ( infusionrate , 1.0f ) ) issued.\n");
 #endif
-        infusionrate = Floor / 10;
+        infusionrate = Floor + small_step;
 #ifdef DEBUG
         debug_print("Action infusionrate = Floor + big_step issued.\n");
 #endif       
@@ -315,9 +315,9 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1up(JNIEnv *env
 #ifdef DEBUG        
         debug_print("Action Floor = ( infusionrate / 10.0f ) - fmod ( ( infusionrate / 10.0f ) , 1.0f ) issued.\n");
 #endif 
-        infusionrate = ( Floor + big_step ) * 10;
+        infusionrate = ( Floor + small_step ) * 10;
 #ifdef DEBUG        
-        debug_print("Action infusionrate = ( Floor + big_step ) * 10 issued.\n");
+        debug_print("Action infusionrate = ( Floor + small_step ) * 10 issued.\n");
 #endif       
         enter(on);
         assert( current_state == on );
@@ -372,13 +372,13 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1DOWN(JNI
     }
     if ( (current_state == on) && (vtbi >= 1000) ) {
         leave(on);
-        Ceil = ( vtbi / 100.0f ) - fmod ( ( vtbi / 100.0f ) , 1.0f );
+        Ceil = ( vtbi / 1000.0f ) - fmod ( ( vtbi / 1000.0f ) , 1.0f );
 #ifdef DEBUG
-        debug_print("Action Ceil = ( vtbi / 100.0f ) - fmod ( ( vtbi / 100.0f ) , 1.0f ) issued.\n");
+        debug_print("Action Ceil = ( vtbi / 1000.0f ) - fmod ( ( vtbi / 1000.0f ) , 1.0f ) issued.\n");
 #endif
-        vtbi = ( Ceil - big_step ) * 100;
+        vtbi = Ceil * 100;
 #ifdef DEBUG
-        debug_print("Action vtbi = ( Ceil - big_step ) * 100 issued.\n");
+        debug_print("Action vtbi = Ceil * 1000 issued.\n");
 #endif
         enter(on);
         assert( current_state == on );
@@ -422,7 +422,7 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1down(JNI
 #ifdef DEBUG
         debug_print("Action Ceil = ( vtbi / 10.0f ) - fmod ( ( vtbi / 10.0f ) , 1.0f ) issued.\n");
 #endif
-        vtbi = ( Ceil - big_step ) * 10;
+        vtbi = ( Ceil - small_step ) * 10;
 #ifdef DEBUG
         debug_print("Action vtbi = ( Ceil - big_step ) * 10 issued.\n");
 #endif
@@ -464,11 +464,11 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1UP(JNIEn
     }
     if ( (current_state == on) && (vtbi < 100) ) {
         leave(on);
-        Floor = ((vtbi * 10) + big_step) - fmod (((vtbi * 10) + big_step) , 1.0f);
+        Floor = ( vtbi ) - fmod ( ( vtbi ) , 1.0f );
 #ifdef DEBUG
         debug_print("Action Floor = ( vtbi - fmod ( vtbi , 1.0f ) ) issued.\n");
 #endif
-        vtbi = Floor / 10;
+        vtbi = Floor + small_step;
 #ifdef DEBUG
         debug_print("Action vtbi = Floor + big_step issued.\n");
 #endif
@@ -556,9 +556,9 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1up(JNIEn
 #ifdef DEBUG
         debug_print("Action Floor = ( vtbi / 10.0f ) - fmod ( ( vtbi / 10.0f ) , 1.0f ) issued.\n");
 #endif
-        vtbi = ( Floor + big_step ) * 10;
+        vtbi = ( Floor + small_step ) * 10;
 #ifdef DEBUG
-        debug_print("Action vtbi = ( Floor + big_step ) * 10 issued.\n");
+        debug_print("Action vtbi = ( Floor + small_step ) * 10 issued.\n");
 #endif
         enter(on);
         assert( current_state == on );
