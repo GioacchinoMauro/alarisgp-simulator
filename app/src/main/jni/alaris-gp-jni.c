@@ -103,7 +103,7 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1DOWN(JNIEnv *e
 #endif       
         enter(on);
         assert( current_state == on );
-        return;
+        //return;
     }
     if ( (current_state == on) && (infusionrate <= MIN) ) {
         leave(on);
@@ -115,7 +115,7 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1DOWN(JNIEnv *e
         assert( current_state == on );
         return;
     }
-    if ( (current_state == on) && (( infusionrate >= 100 ) && ( infusionrate < 1000 )) ) {
+    if ( (current_state == on) && (( infusionrate >= 100 ) && ( infusionrate <= 1000 )) ) {
         leave(on);
         Ceil = ( infusionrate / 10.0f ) - fmod ( ( infusionrate / 10.0f ) , 1.0f );
 #ifdef DEBUG        
@@ -129,7 +129,7 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1DOWN(JNIEnv *e
         assert( current_state == on );
         return;
     }
-    if ( (current_state == on) && (infusionrate >= 1000) ) {
+    if ( (current_state == on) && (infusionrate > 1000) ) {
         leave(on);
         Ceil = ( infusionrate / 1000.0f ) - fmod ( ( infusionrate / 1000.0f ) , 1.0f );
 #ifdef DEBUG        
@@ -210,7 +210,20 @@ JNIEXPORT void JNICALL
 Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1UP(JNIEnv *env,
                                                                         jobject instance) {
     assert( current_state ==  on );
-
+     if ( (current_state == on) && (( infusionrate >= 1000 ) && ( infusionrate < MAX )) ) {
+        leave(on);
+        Floor = ( infusionrate / 100.0f ) - fmod ( ( infusionrate / 100.0f ) , 1.0f );
+#ifdef DEBUG
+        debug_print("Action Floor = ( infusionrate / 100.0f ) - fmod ( ( infusionrate / 100.0f ) , 1.0f ) issued.\n");
+#endif
+        infusionrate = ( Floor + big_step ) * 100;
+#ifdef DEBUG
+        debug_print("Action infusionrate = ( Floor + big_step ) * 100 issued.\n");
+#endif
+        enter(on);
+        assert( current_state == on );
+        //return;
+        }
     if ( (current_state == on) && (infusionrate >= MAX) ) {
         leave(on);
         infusionrate = MAX;
@@ -244,20 +257,6 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1Click_1UP(JNIEnv *env
         infusionrate = ( Floor + big_step ) * 10;
 #ifdef DEBUG        
         debug_print("Action infusionrate = ( Floor + big_step ) * 10 issued.\n");
-#endif       
-        enter(on);
-        assert( current_state == on );
-        return;
-    }
-    if ( (current_state == on) && (( infusionrate >= 1000 ) && ( infusionrate < MAX )) ) {
-        leave(on);
-        Floor = ( infusionrate / 100.0f ) - fmod ( ( infusionrate / 100.0f ) , 1.0f );
-#ifdef DEBUG        
-        debug_print("Action Floor = ( infusionrate / 100.0f ) - fmod ( ( infusionrate / 100.0f ) , 1.0f ) issued.\n");
-#endif 
-        infusionrate = ( Floor + big_step ) * 100;
-#ifdef DEBUG        
-        debug_print("Action infusionrate = ( Floor + big_step ) * 100 issued.\n");
 #endif       
         enter(on);
         assert( current_state == on );
@@ -344,7 +343,7 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1DOWN(JNI
 #endif
         enter(on);
         assert( current_state == on );
-        return;
+        //return;
     }
     if ( (current_state == on) && (vtbi <= MIN) ) {
         leave(on);
@@ -452,9 +451,23 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1UP(JNIEn
                                                                            jobject instance) {
     assert( current_state ==  on );
 
-    if ( (current_state == on) && (vtbi >= MAX) ) {
+    if ( (current_state == on) && (( vtbi > 1000 ) && ( vtbi < maxinfuse )) ) {
         leave(on);
-        vtbi = MAX;
+        Floor = ( vtbi / 100.0f ) - fmod ( ( vtbi / 100.0f ) , 1.0f );
+#ifdef DEBUG
+        debug_print("Action Floor = ( vtbi / 100.0f ) - fmod ( ( vtbi / 100.0f ) , 1.0f ) issued.\n");
+#endif
+        vtbi = ( Floor + big_step ) * 100;
+#ifdef DEBUG
+        debug_print("Action vtbi = ( Floor + big_step ) * 100 issued.\n");
+#endif
+        enter(on);
+        assert( current_state == on );
+        //return;
+    }
+    if ( (current_state == on) && (vtbi >= maxinfuse) ) {
+        leave(on);
+        vtbi = maxinfuse;
 #ifdef DEBUG
         debug_print("Action vtbi = MAX issued.\n");
 #endif
@@ -476,7 +489,7 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1UP(JNIEn
         assert( current_state == on );
         return;
     }
-    if ( (current_state == on) && (( vtbi >= 100 ) && ( vtbi < 1000 )) ) {
+    if ( (current_state == on) && (( vtbi >= 100 ) && ( vtbi <= 1000 )) ) {
         leave(on);
         Floor = ( vtbi / 10.0f ) - fmod ( ( vtbi / 10.0f ) , 1.0f );
 #ifdef DEBUG
@@ -490,20 +503,6 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1UP(JNIEn
         assert( current_state == on );
         return;
     }
-    if ( (current_state == on) && (( vtbi >= 1000 ) && ( vtbi < MAX )) ) {
-        leave(on);
-        Floor = ( vtbi / 100.0f ) - fmod ( ( vtbi / 100.0f ) , 1.0f );
-#ifdef DEBUG
-        debug_print("Action Floor = ( vtbi / 100.0f ) - fmod ( ( vtbi / 100.0f ) , 1.0f ) issued.\n");
-#endif
-        vtbi = ( Floor + big_step ) * 100;
-#ifdef DEBUG
-        debug_print("Action vtbi = ( Floor + big_step ) * 100 issued.\n");
-#endif
-        enter(on);
-        assert( current_state == on );
-        return;
-    }
     return;
 }
 
@@ -512,9 +511,9 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1up(JNIEn
                                                                            jobject instance) {
     assert( current_state ==  on );
 
-    if ( (current_state == on) && (vtbi >= MAX) ) {
+    if ( (current_state == on) && (vtbi >= maxinfuse) ) {
         leave(on);
-        vtbi = MAX;
+        vtbi = maxinfuse;
 #ifdef DEBUG
         debug_print("Action vtbi = MAX issued.\n");
 #endif
@@ -550,7 +549,7 @@ Java_com_simulator_giocchi27_alarisgp_MainActivity_invoke_1VTBI_1Click_1up(JNIEn
         assert( current_state == on );
         return;
     }
-    if ( (current_state == on) && (( vtbi >= 1000 ) && ( vtbi < MAX )) ) {
+    if ( (current_state == on) && (( vtbi >= 1000 ) && ( vtbi < maxinfuse )) ) {
         leave(on);
         Floor = ( vtbi / 10.0f ) - fmod ( ( vtbi / 10.0f ) , 1.0f );
 #ifdef DEBUG
